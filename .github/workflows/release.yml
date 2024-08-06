@@ -9,7 +9,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  Build & Release Draft:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Sources
@@ -22,7 +22,7 @@ jobs:
 
       - name: Build AK Box
         run: yarn && yarn build
-#
+
 #      - name: Release Draft
 #        uses: release-drafter/release-drafter@v6
 #        env:
