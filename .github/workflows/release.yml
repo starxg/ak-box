@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  Build & Release Draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Build AK Box
+        run: yarn && yarn build
+#
+#      - name: Release Draft
+#        uses: release-drafter/release-drafter@v6
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: ${{ github.workspace }}/dist/ak-box.user.js
+          token: ${{ secrets.GITHUB_TOKEN }}
